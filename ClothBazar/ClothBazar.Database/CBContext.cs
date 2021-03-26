@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace ClothBazar.Database
 {
-   public class CBContext : DbContext
+   public class CBContext : DbContext,IDisposable
     {
         public CBContext():base("Cs")
         {
 
         }
-        DbSet<category> categories { get; set; }
-        DbSet<product> products { get; set; }
+       public DbSet<category> categories { get; set; }
+      public   DbSet<product> products { get; set; }
     }
 }
