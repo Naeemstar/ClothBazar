@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ClothBazar.Entities.product>
+
+@{
+    ViewBag.Title = "producttable";
+}
+<br />
+<br />
+<form>
+    
+    <input name="search" id="srchtxt" />
+    <button type="button" id="srchbtn">search</button>
+    @Html.ActionLink("Create New", "Create")
+    
+</form>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<script>
+    $("#srchbtn").click(function () {
+        var searchvalue = $("#srchtxt").val();
+        $.ajax({
+            url: '/product/producttable',
+            type:'post',
+            data: {
+                search:searchvalue
+            }
+            //data: yourData,
+            //datatype: 'json'
+        })
+            .done(function (response) {
+                $("#tablecontainer").html(response);
+            })
+
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+</script>
+
