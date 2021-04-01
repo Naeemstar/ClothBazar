@@ -178,6 +178,7 @@
     <Content Include="Views\product\producttable.cshtml" />
     <Content Include="Views\product\Create.cshtml" />
     <Content Include="Views\product\Index.cshtml" />
+    <Content Include="Views\product\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

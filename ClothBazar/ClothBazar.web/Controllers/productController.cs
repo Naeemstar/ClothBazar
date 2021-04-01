@@ -37,5 +37,23 @@ namespace ClothBazar.web.Controllers
             productservic.saveproduct(product);
             return RedirectToAction("producttable");
         }
+        [HttpGet]
+        public ActionResult Edit(int ID)
+        {
+            var products = productservic.getsangleproduct(ID);
+            return PartialView(products);
+        }
+        [HttpPost]
+        public ActionResult Edit(product product)
+        {
+            productservic.updateproduct(product);
+            return RedirectToAction("producttable");
+        }
+        [HttpPost]
+        public ActionResult Delete(int ID)
+        {
+            productservic.deleteproduct(ID);
+            return RedirectToAction("producttable");
+        }
     }
 }

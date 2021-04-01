@@ -9,10 +9,12 @@
     
     <input name="search" id="srchtxt" />
     <button type="button" id="srchbtn">search</button>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
+    <input type="button" id="newbtn"  value="new"/>
     
 </form>
-
+<br />
+<br />
 <div>
     <table class="table">
         <tr>
@@ -41,9 +43,11 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @*@Html.ActionLink("Edit", "Edit", new {data_id = item.ID,@class="editbtn"})*@ 
+                    <button class="editbtn" data_id="@item.ID">Edit</button>|
+                    @*@Html.ActionLink("Details", "Details", new { id = item.ID })*@
+                    <button class="deletbtn" data_id="@item.ID">Delete</button>|
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
                 </td>
             </tr>
         }
@@ -71,5 +75,70 @@
                 alert("fail");
             });
     });
+    $(".editbtn").click(function () {
+    
+        $.ajax({
+
+            url: '/product/Edit',
+            data: {
+                ID: $(this).attr('data_id')
+
+            }
+            
+            //data: yourData,
+            //datatype: 'json'
+        })
+            .done(function (response) {
+                $("#actioncontainer").html(response);
+            })
+
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+    $("#newbtn").click(function () {
+
+        $.ajax({
+
+            url: '/product/Create',
+
+
+            //data: yourData,
+            //datatype: 'json'
+        })
+            .done(function (response) {
+                $("#actioncontainer").html(response);
+            })
+
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+    $(".deletbtn").click(function () {
+        var confirmDelet = confirm("are you sure you want to delete this");
+        if (confirmDelet) {
+
+
+            $.ajax({
+                type: 'post',
+                url: '/product/Delete',
+                data: {
+                    ID: $(this).attr('data_id')
+
+                }
+
+                //data: yourData,
+                //datatype: 'json'
+            })
+                .done(function (response) {
+                    $("#tablecontainer").html(response);
+                })
+
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("fail");
+                });
+        }
+        });
+   
 </script>
 

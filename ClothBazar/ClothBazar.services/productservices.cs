@@ -50,11 +50,14 @@ namespace ClothBazar.services
 
         //    }
         //}
-        public void deleteproduct(product product)
+        public void deleteproduct(int ID)
         {
             using (var context = new CBContext())
             {
-                context.Entry(product).State = System.Data.Entity.EntityState.Deleted;
+                //context.Entry(product).State = System.Data.Entity.EntityState.Deleted;
+                //context.SaveChanges();
+                var product = context.products.Find(ID);
+                context.products.Remove(product);
                 context.SaveChanges();
             }
         }
